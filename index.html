@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Cheat Sheet</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/a11y-dark.min.css"
+    />
+    <style>
+      html {
+        padding: 0;
+        margin: 0;
+        font-size: 18px;
+      }
+
+      body {
+        font: menu;
+        font-size: 1rem;
+        line-height: 1.4;
+        padding: 0;
+        margin: 0;
+      }
+
+      section {
+        padding-top: 1rem;
+        width: 80%;
+        margin: auto;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+
+      details[open] summary ~ * {
+        animation: open 0.3s ease-in-out;
+      }
+
+      @keyframes open {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details summary {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-top: 1px solid black;
+        position: relative;
+        cursor: pointer;
+        font-size: 1.25rem;
+        font-weight: 300;
+        list-style: none;
+      }
+
+      details summary:after {
+        content: "+";
+        color: black;
+        position: absolute;
+        font-size: 1.75rem;
+        line-height: 0;
+        margin-top: 0.75rem;
+        right: 0;
+        font-weight: 200;
+        transform-origin: center;
+        transition: 200ms linear;
+      }
+
+      details[open] summary:after {
+        transform: rotate(45deg);
+        font-size: 2rem;
+      }
+
+      details summary {
+        outline: 0;
+      }
+
+      details p {
+        font-size: 0.95rem;
+        margin: 0 0 1rem;
+        padding-top: 1rem;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      code {
+        font-family: "Microsoft YaHei UI", serif;
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <section>
+      <h1>Git 命令速查表</h1>
+      <details open>
+        <summary>Create 创建</summary>
+
+        <pre><code class="language-bash"># From existing data
+cd ~/my_project_directory
+git init
+git add .
+
+# From existing repository
+git clone ~/existing repo ~/new/repo
+git clone git://host.org/project.git
+git clone ssh://user@host.org/project.git</code></pre>
+      </details>
+
+      <details open>
+        <summary>Show 展示</summary>
+
+        <pre><code class="language-bash"># Files changed in working directory
+git status
+
+# Changes made to tracked files
+git diff
+
+# What changed between ID1 and ID2
+git diff ID1 ID2
+
+# History of changes
+git log
+
+# History of changes for file with diffs
+git log -p FILE DIRECTORY
+
+# Who changed what and when in a file
+git blame FILE
+
+# A commit identified by ID
+git show ID
+
+# A specific file from a specific ID
+git show ID:FILE
+
+# All local branches
+# star (*) marks the current branch
+git branch
+</code></pre>
+      </details>
+
+      <details open>
+        <summary>Revert 还原</summary>
+
+        <pre><code class="language-bash"># Return to the last commited state
+# This cannot be undone!
+git reset --hard
+
+# Revert the last commit
+# Creates a new commit
+git revert HEAD
+
+# Revert specific commit
+# Creates a new commit
+git revert ID
+
+# Fix the last commit
+# (after editing the broken files)
+git commit -a --amend
+
+# Checkout the ID version of a file
+git checkout ID FILE></code></pre>
+      </details>
+
+      <details open>
+        <summary>Update 更新</summary>
+
+        <pre><code class="language-bash"># Fetch latest changes from origin
+# (this does not merge them)
+git fetch
+
+# Pull latest changes from origin
+# (does a fetch followed by a merge)
+git pull
+
+# Apply a patch that someone sent you
+git am -3 patch.mbox
+
+# In case of conflict, resolve the conflict and
+git am --resolved</code></pre>
+      </details>
+
+      <details open>
+        <summary>Publish 发布</summary>
+
+        <pre><code class="language-bash"># Commit all your local changes
+git commit -a
+
+# Prepare a patch for other developers
+git format-patch origin
+
+# Push changes to origin
+git push
+
+# Make a version or milestone
+git tag v1.0</code></pre>
+      </details>
+
+      <details open>
+        <summary>Branch 分支</summary>
+
+        <pre><code class="language-bash"># Switch to a branch
+git checkout BRANCH
+
+# Merge BRANCH1 to BRANCH2
+git checkout BRANCH2
+git merge BRANCH1
+
+# Create branch BRANCH based on HEAD
+git branch BRANCH
+
+# Create branch BRANCH based on OTHER
+# and switch to it
+git checkout -b BRANCH OTHER
+
+# Delete branch BRANCH
+git branch -d BRANCH</code></pre>
+      </details>
+
+      <details open>
+        <summary>Merge 合并</summary>
+
+        <pre><code class="language-bash"># View merge conflicts
+git diff
+
+# View merge conflicts against base file
+git diff -base FILE
+
+# View merge conflicts against your changes
+git diff --ours FILE
+
+# View merge conflicts against other changes
+git diff --theirs FILE
+
+# Discard a conflicting patch
+git reset --hard
+git rebase --skip
+
+# After resolving conflicts, merge with
+git add CONFLICTING_FILE
+git rebase --continue </code></pre>
+      </details>
+
+      <details open>
+        <summary>Workflow 工作流程</summary>
+        <p><img src="./workflow.png" alt="workflow" /></p>
+      </details>
+    </section>
+  </body>
+</html>
